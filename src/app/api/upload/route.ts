@@ -61,11 +61,8 @@ export async function POST(req: Request) {
     /* ====================================================
         UPLOAD DIRECTORY
     ==================================================== */
-
-    const uploadDir = path.join(
-      process.cwd(),
-      'public/uploads'
-    )
+const uploadDir = process.env.UPLOAD_DIR ||
+  path.join(process.cwd(), 'uploads')
 
     /* ====================================================
         CREATE DIRECTORY IF NOT EXISTS
