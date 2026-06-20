@@ -1,0 +1,381 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum OrderStatus {
+  pending
+  paid
+  failed
+  refunded
+}
+
+enum AccessStatus {
+  pending
+  granted
+  revoked
+  failed
+}
+
+model AdminUser {
+  id          String    @id @default(cuid())
+  email       String    @unique
+  password    String
+  name        String
+  role        String    @default("editor")
+  isActive    Boolean   @default(true)
+  lastLoginAt DateTime?
+  createdBy   String?
+  createdAt   DateTime  @default(now())
+}
+
+model Course {
+  id String @id @default(cuid())
+
+  title String
+  slug  String @unique
+
+  shortDescription String
+  description      String @db.Text
+
+  thumbnail   String?
+  bannerImage String?
+
+  category   String
+  classRange String?
+
+  isFeatured Boolean @default(false)
+  isActive   Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  boards CourseBoard[]
+  modes  CourseMode[]
+  courseInfo CourseInfo[]
+  enrollments Enrollment[]
+  orders      Order[]
+
+  faqs FAQ[]
+}
+
+model CourseBoard {
+  id String @id @default(cuid())
+
+  board String
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id])
+
+  @@index([courseId])
+}
+
+model CourseMode {
+  id String @id @default(cuid())
+  modeName String
+  isActive Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id])
+  packages CoursePackage[]
+  orders      Order[]
+  enrollments Enrollment[]
+  @@index([courseId])
+}
+
+model CoursePackage {
+  id String @id @default(cuid())
+
+  packageName String
+
+  monthlyPrice Float
+
+  duration String?
+
+  description String?
+
+  isPopular Boolean @default(false)
+
+  isRecommended Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  modeId String
+  mode   CourseMode @relation(fields: [modeId], references: [id])
+
+  features PackageFeature[]
+
+  orders      Order[]
+  enrollments Enrollment[]
+
+  @@index([modeId])
+}
+
+model CourseInfo {
+  id String @id @default(cuid())
+
+  label String
+  value String
+
+  sortOrder Int @default(0)
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([courseId])
+}
+
+model PackageFeature {
+  id String @id @default(cuid())
+  feature String
+  packageId String
+  package   CoursePackage @relation(fields: [packageId], references: [id])
+  @@index([packageId])
+}
+
+model Branch {
+  id String @id @default(cuid())
+  name String
+  slug String @unique
+  address String
+  city    String
+  phone String
+  mapUrl String?
+  isActive Boolean @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Faculty {
+  id String @id @default(cuid())
+  name String
+  bio String @db.Text
+  photo String?
+  experience String
+  subjects String[]
+  isActive Boolean @default(true)
+  createdAt DateTime @default(now())
+}
+
+model BlogPost {
+  id String @id @default(cuid())
+  title String
+  slug String @unique
+  excerpt String?
+  coverImage String?
+  content String @db.Text
+  isPublished Boolean @default(false)
+  publishedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Lead {
+  id String @id @default(cuid())
+
+  name  String
+  email String
+  phone String
+
+  courseInterest String?
+
+  studentCategory String?
+  preferredMode String?
+  schoolCollegeName String?
+  referralCode String?
+
+  branch String?
+
+  source String?
+
+  leadType String?
+
+  status String @default("new")
+
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id String @id @default(cuid())
+
+  email String @unique
+
+  name String
+
+  phone String?
+
+  password String
+
+  createdAt DateTime @default(now())
+
+  enrollments Enrollment[]
+
+  orders Order[]
+}
+
+model Order {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id])
+
+  courseModeId String
+  courseMode   CourseMode @relation(fields: [courseModeId], references: [id])
+
+  packageId String
+  package   CoursePackage @relation(fields: [packageId], references: [id])
+
+  amount Float
+
+  razorpayOrderId String?
+
+  razorpayPaymentId String?
+
+  status OrderStatus @default(pending)
+
+  createdAt DateTime @default(now())
+
+  enrollments Enrollment[]
+}
+
+model Enrollment {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id])
+
+  courseModeId String
+  courseMode   CourseMode @relation(fields: [courseModeId], references: [id])
+
+  packageId String
+  package   CoursePackage @relation(fields: [packageId], references: [id])
+
+  orderId String?
+  order   Order?  @relation(fields: [orderId], references: [id])
+
+  accessStatus AccessStatus @default(pending)
+
+  lmsAccessGranted Boolean @default(false)
+
+  enrolledAt DateTime @default(now())
+
+  createdAt DateTime @default(now())
+
+  lmsAccess LMSAccess?
+
+  @@unique([userId, packageId])
+}
+
+model LMSAccess {
+  id String @id @default(cuid())
+
+  enrollmentId String     @unique
+  enrollment   Enrollment @relation(fields: [enrollmentId], references: [id])
+
+  externalStudentId String?
+
+  accessStatus AccessStatus @default(pending)
+
+  grantedAt DateTime?
+
+  notes String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Result {
+  id String @id @default(cuid())
+
+  studentName String
+
+  photo String?
+
+  result String
+
+  examType String
+
+  year String
+
+  achievement String?
+
+  isFeatured Boolean @default(false)
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+}
+
+model Testimonial {
+  id String @id @default(cuid())
+
+  studentName String
+
+  photo String?
+
+  quote String @db.Text
+
+  course String
+
+  branch String?
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+}
+
+model FAQ {
+  id String @id @default(cuid())
+
+  question String
+
+  answer String @db.Text
+
+  courseId String?
+
+  course Course? @relation(fields: [courseId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Announcement {
+  id String @id @default(cuid())
+
+  title String
+
+  message String @db.Text
+
+  isActive Boolean @default(true)
+
+  expiresAt DateTime?
+
+  createdAt DateTime @default(now())
+}
+
+model Feedback {
+  id String @id @default(cuid())
+
+  rating Int
+
+  message String?
+
+  name String?
+
+  createdAt DateTime @default(now())
+}

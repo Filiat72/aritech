@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+}
+
+/* Dark glass theme for all admin cards */
+.admin-card {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  color: #ffffff;
+}
+
+/* Override shadcn Card inside admin */
+.admin-page [class*="card"],
+.admin-page .Card {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+  border-radius: 16px !important;
+}
+
+/* Table styles */
+.admin-page table {
+  color: #bfdbfe !important;
+}
+
+.admin-page thead tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.admin-page thead th {
+  color: #93c5fd !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+}
+
+.admin-page tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  transition: background 0.15s !important;
+}
+
+.admin-page tbody tr:hover {
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+.admin-page tbody td {
+  color: #e2e8f0 !important;
+}
+
+/* Input styles */
+.admin-page input,
+.admin-page textarea,
+.admin-page select {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  border-radius: 10px !important;
+}
+
+.admin-page input::placeholder,
+.admin-page textarea::placeholder {
+  color: rgba(147, 197, 253, 0.5) !important;
+}
+
+.admin-page input:focus,
+.admin-page textarea:focus,
+.admin-page select:focus {
+  border-color: rgba(245, 166, 35, 0.5) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.1) !important;
+}
+
+.admin-page select option {
+  background: #0d2580 !important;
+  color: #ffffff !important;
+}
+
+/* Label styles */
+.admin-page label {
+  color: #93c5fd !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+}
+
+/* Dialog/Modal */
+.admin-page [role="dialog"] {
+  background: rgba(13, 37, 128, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+
+.admin-page [role="dialog"] h2 {
+  color: #ffffff !important;
+}
+
+/* Badge overrides */
+.admin-page .badge-default {
+  background: rgba(245, 166, 35, 0.2) !important;
+  color: #f5a623 !important;
+  border: 1px solid rgba(245, 166, 35, 0.3) !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 166, 35, 0.4);
+}

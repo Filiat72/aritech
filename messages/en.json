@@ -1,0 +1,325 @@
+{
+  "navbar": {
+    "home": "Home",
+    "about": "About",
+    "courses": "Courses",
+    "faculty": "Faculty",
+    "results": "Results",
+    "blog": "Blog",
+    "contact": "Contact",
+    "demo": "Free Demo"
+  },
+
+  "home": {
+    "badge": "Career-Focused Learning Platform",
+
+    "titleStart": "Build Your Career",
+
+    "titleEnd": "Through Practical Learning",
+
+    "description": "Industry-focused coaching, mentorship, and smart learning programs for students, aspirants, and job seekers.",
+
+    "trust1": "10K+ Students",
+    "trust2": "Expert Mentors",
+    "trust3": "Career-Focused Programs",
+
+    "primaryButton": "Book Free Demo",
+
+    "secondaryButton": "Explore Courses",
+
+    "floatingText": "Career Placements",
+
+    "learningPaths": {
+      "label": "Choose Your Learning Path",
+
+      "title1": "Programs Designed for Every Learning Journey",
+
+      "title2": "Every Learning Journey",
+
+      "description": "Explore personalized learning paths for students, aspirants, professionals, and lifelong learners.",
+
+      "cta": "Explore Courses",
+
+      "schoolTitle": "School & College",
+
+      "schoolDescription": "Academic support programs for school and college students with strong conceptual foundations.",
+
+      "competitiveTitle": "Competitive Exams",
+
+      "competitiveDescription": "Structured preparation programs for NEET, JEE, UPSC, TNPSC, SSC and other major exams.",
+
+      "careerTitle": "Career Growth",
+
+      "careerDescription": "Industry-focused skill development and career-oriented training programs for future professionals.",
+
+      "restartTitle": "Restart Learning",
+
+      "restartDescription": "Flexible education pathways for dropouts, distance learners, and career restart aspirants."
+    },
+
+    "whyChooseUs": {
+      "label": "Why Students Choose Aritech",
+
+      "title1": "Practical Learning",
+
+      "highlight": "Built",
+
+      "title2": "for Real Career Growth",
+
+      "description": "We combine expert mentorship, practical learning, and career-focused programs to help students build real-world skills and achieve long-term success.",
+
+      "studentsTrained": "Students trained across multiple programs",
+
+      "cta": "About Aritech",
+
+      "mentorshipTitle": "Expert Mentorship",
+
+      "mentorshipDescription": "Learn directly from experienced mentors and industry professionals with practical guidance.",
+
+      "practicalTitle": "Practical Learning",
+
+      "practicalDescription": "Hands-on learning experiences designed to build real-world skills and confidence.",
+
+      "careerTitle": "Career-Focused Programs",
+
+      "careerDescription": "Structured programs aligned with industry demands and future career opportunities.",
+
+      "learningTitle": "Flexible Learning",
+
+      "learningDescription": "Accessible learning pathways for students, aspirants, and working professionals."
+    },
+
+    "lms": {
+      "label": "Smart LMS Platform",
+
+      "title1": "Learn Anytime",
+
+      "title2": "Through Our",
+
+      "highlight": "Smart LMS",
+
+      "description": "Access classes, mock tests, assignments, and progress tracking through our modern learning platform built for flexible education.",
+
+      "cta": "Book Free Demo",
+
+      "access": "Learning\nAccess",
+
+      "videoTitle": "Recorded Video Lessons",
+
+      "videoDescription": "Learn at your own pace with structured video sessions.",
+
+      "mockTitle": "Mock Tests & Assessments",
+
+      "mockDescription": "Track your learning progress through regular evaluations.",
+
+      "trackingTitle": "Smart Progress Tracking",
+
+      "trackingDescription": "Monitor performance and improve consistently with insights."
+    },
+
+    "results": {
+      "label": "Student Achievements",
+
+      "title": "Our Student Success Stories",
+
+      "description": "Student achievements across competitive exams, placements, language programs, and professional training.",
+
+      "disclaimer": "Results shown are based on internal student records and achievements.",
+
+      "cta": "View All Results"
+    },
+
+    "testimonials": {
+      "label": "Testimonials",
+
+      "title1": "Students & Parents",
+
+      "title2": "Trust Aritech",
+
+      "description": "Real feedback from learners who improved their academic and career journey through our practical learning programs."
+    },
+
+    "faq": {
+      "label": "FAQ",
+
+      "title1": "You’ve got",
+
+      "title2": "questions, we’ve",
+
+      "title3": "got",
+
+      "highlight": "answers",
+
+      "description": "Find quick answers about admissions, online learning, placement support, distance education, and student guidance programs.",
+
+      "institutionQuestion": "How can I tell if using Aritech is right for my institution?",
+
+      "institutionAnswer": "Aritech is designed for schools, coaching centers, and educational institutions looking for a modern LMS, admissions, and student management solution.",
+
+      "transitionQuestion": "How long does it take to transition to the platform?",
+
+      "transitionAnswer": "Most institutions can complete onboarding and initial setup within a few days depending on the size and requirements.",
+
+      "workflowQuestion": "Will we need to make changes in our current workflow?",
+
+      "workflowAnswer": "No major changes are required. The platform is built to simplify and streamline your existing academic and operational processes.",
+
+      "classesQuestion": "Do you provide online and recorded classes?",
+
+      "classesAnswer": "Yes. Students can access both live and recorded sessions through the LMS with mobile-friendly learning support."
+    }
+  },
+
+  "about": {
+    "hero": {
+      "label": "About Aritech",
+
+      "title1": "Helping Students Build",
+
+      "highlight": "Confident Careers",
+
+      "title2": "Through Practical Learning",
+
+      "description": "Aritech is a career-focused learning platform helping students, aspirants, graduates, and working professionals build real-world skills through practical training, mentorship, and industry-oriented education.",
+
+      "cta": "Explore Courses",
+
+      "trusted": "Trusted by students across multiple career paths"
+    },
+    "story": {
+  "label": "Our Story",
+
+  "title1": "Built to Make",
+
+  "highlight": "Career Learning",
+
+  "title2": "More Practical & Accessible",
+
+  "paragraph1": "Aritech was created with a simple vision to bridge the gap between academic learning and real-world career skills. Many students complete courses without practical exposure, mentorship, or industry direction.",
+
+  "paragraph2": "Through career-focused programs, practical training, mentorship, and flexible learning opportunities, we help students, aspirants, graduates, and professionals build confidence and move toward meaningful career growth.",
+
+  "practicalTitle": "Practical Learning",
+
+  "practicalDescription": "Hands-on training focused on real-world application.",
+
+  "guidanceTitle": "Career Guidance",
+
+  "guidanceDescription": "Mentorship and support aligned with industry needs.",
+
+  "flexibleTitle": "Flexible Programs",
+
+  "flexibleDescription": "Learning paths for students, aspirants, and professionals.",
+
+  "studentTitle": "Student-Centered",
+
+  "studentDescription": "Focused on helping learners build confidence and skills."
+},
+"mission": {
+  "label": "Mission & Vision",
+
+  "title1": "Driven by Purpose,",
+
+  "highlight": "Focused on Student Growth",
+
+  "description": "Our vision and mission are centered around helping students build practical skills, confidence, and career opportunities through accessible and career-focused learning.",
+
+  "visionTitle": "Our Vision",
+
+  "missionTitle": "Our Mission",
+
+  "vision1": "To make career-focused education more practical, accessible, and empowering for every learner.",
+
+  "vision2": "To help students gain confidence, real-world skills, and meaningful career opportunities.",
+
+  "vision3": "To build a learning environment that supports growth, flexibility, and continuous improvement.",
+
+  "mission1": "Deliver practical and industry-oriented training programs.",
+
+  "mission2": "Support students through mentorship, guidance, and skill development.",
+
+  "mission3": "Create learning experiences that prepare students for real career opportunities."
+},
+"whyChoose": {
+  "label": "Why Choose Aritech",
+
+  "title1": "Learning Designed for",
+
+  "highlight": "Real Career Growth",
+
+  "description": "We focus on practical learning, mentorship, and career-oriented education to help students build confidence and industry-ready skills.",
+
+  "practicalTitle": "Practical Learning",
+
+  "practicalDescription": "Hands-on training focused on real-world skills and career readiness.",
+
+  "mentorshipTitle": "Career Mentorship",
+
+  "mentorshipDescription": "Guidance and support to help students grow with confidence.",
+
+  "industryTitle": "Industry-Oriented Programs",
+
+  "industryDescription": "Programs aligned with current industry expectations and opportunities.",
+
+  "flexibleTitle": "Flexible Learning",
+
+  "flexibleDescription": "Accessible learning paths for students, aspirants, and professionals."
+},
+"cta": {
+  "label": "Ready to Take the Next Step?",
+
+  "title1": "Start Your Learning",
+
+  "title2": "Journey with Aritech",
+
+  "description": "Career-focused learning designed to help students build practical skills, confidence, and real-world opportunities through supportive mentorship and training.",
+
+  "button": "Contact Our Team"
+
+
+}
+  },
+  
+  "footer": {
+  "description": "Complete Learning Hub From School to Career Success. Practical, career-focused education designed for students, aspirants, and professionals.",
+  
+
+  "quickLinksTitle": "Quick Links",
+
+  "coursesTitle": "Our Courses",
+
+  "contactTitle": "Contact Us",
+
+  "address": "2nd Floor, No.687/4, Trichy Rd, Kallimadai, Kongu Nagar, Ramanathapuram, Coimbatore, Tamil Nadu 641 045",
+
+  "copyright": "© 2026 Aritech Services & Solutions Pvt. Ltd. All rights reserved.",
+
+  "privacy": "Privacy Policy",
+
+  "terms": "Terms & Conditions",
+
+  "refund": "Refund Policy",
+
+  "quickLinks": {
+    "home": "Home",
+    "about": "About Us",
+    "courses": "All Courses",
+    "faculty": "Faculty",
+    "results": "Results",
+    "blog": "Blog",
+    "contact": "Contact",
+    "demo": "Book Demo"
+  },
+
+  "courses": {
+    "neet": "NEET Coaching",
+    "jee": "JEE Coaching",
+    "tnpsc": "TNPSC Coaching",
+    "spoken": "Spoken English",
+    "software": "Software Training",
+    "medical": "Medical Coding",
+    "mis": "MIS Training",
+    "distance": "Distance Education"
+  }
+}
+}
