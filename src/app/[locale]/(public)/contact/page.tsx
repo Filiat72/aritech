@@ -669,7 +669,7 @@ export default function ContactPage() {
                       </p>
 
                       <p className="mt-2 text-sm text-blue-100">
-                        +91 95666 56633
+                        +91 9500020181
                       </p>
 
                       <p className="mt-1 text-sm text-blue-100">

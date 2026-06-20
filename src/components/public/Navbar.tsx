@@ -380,7 +380,7 @@ const currentLocale =
             <Phone className="w-4 h-4" />
 
             <span>
-              +91 95666 56633
+              +91 9500020181
             </span>
           </a>
 
