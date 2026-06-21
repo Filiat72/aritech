@@ -772,7 +772,7 @@ export default function ContactPage() {
             >
               <iframe
                 title="AriTech Location"
-                src="https://www.google.com/maps?q=Tamil%20Nadu%20India&output=embed"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.557895293104!2d77.00134937451983!3d10.996704955093033!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba85912d75d1b11%3A0x853d89fba1969098!2sAritech%20Services%20and%20Solutions%20Private%20Limited!5e0!3m2!1sen!2sin!4v1782013278767!5m2!1sen!2sin"
                 width="100%"
                 height="380"
                 loading="lazy"
