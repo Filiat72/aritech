@@ -207,7 +207,8 @@ export default function BookDemoPage() {
                     </p>
 
                     <p className="text-[#7788B6] text-sm mt-1">
-                      +91 98765 43210
+                      +91 9500020181
+
                     </p>
                   </div>
                 </div>
