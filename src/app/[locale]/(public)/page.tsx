@@ -57,7 +57,11 @@ export default async function HomePage() {
 
   return (
     <div
-      className="pt-[95px]"
+      className={
+  announcements.length > 0
+    ? 'pt-[95px]'
+    : 'pt-[70px]'
+}
       style={{
         background: '#eff6ff',
       }}

@@ -34,13 +34,16 @@ const [mobileCoursesOpen, setMobileCoursesOpen] =
 const [courseCategories, setCourseCategories] = useState<any[]>([])
   const [languageOpen, setLanguageOpen] =
   useState(false)
+
+  const [announcement, setAnnouncement] =
+  useState<any>(null)
 const languageRef =
   useRef<HTMLDivElement>(null)
   const coursesRef =
   useRef<HTMLDivElement>(null)
   const pathname = usePathname()
   const router = useRouter()
-console.log(courseCategories)
+
   const languages = [
   {
     code: 'en',
@@ -149,6 +152,32 @@ async function fetchCourseCategories() {
   }
 }
 
+useEffect(() => {
+  fetchAnnouncement()
+}, [])
+
+async function fetchAnnouncement() {
+  try {
+    const res = await fetch(
+      '/api/announcements'
+    )
+
+    const data = await res.json()
+
+    const activeAnnouncement =
+      data.find(
+        (item: any) =>
+          item.isActive
+      )
+
+    setAnnouncement(
+      activeAnnouncement || null
+    )
+  } catch (error) {
+    console.error(error)
+  }
+}
+
   // NAV LINKS
   const navLinks = [
     {
@@ -187,10 +216,13 @@ async function fetchCourseCategories() {
     },
   ]
 
+
+  
   return (
     <header
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{
+        
         background: scrolled
           ? '#4063a2'
           : '#4063a2',
@@ -206,7 +238,7 @@ async function fetchCourseCategories() {
     >
       {/* NAVBAR */}
 
-      <div className="max-w-7xl mx-auto px-4 h-[70px] flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 h-[80px] flex items-center justify-between">
 
         {/* LOGO */}
 
@@ -214,25 +246,26 @@ async function fetchCourseCategories() {
           href="/"
           className="flex items-center gap-2"
         >
-          <div
-            className="
-              w-12
-              h-12
-              rounded-full
-              bg-white
-              flex
-              items-center
-              justify-center
-              overflow-hidden
-              flex-shrink-0
-            "
-          >
+       <div
+  className="
+    w-[70px]
+    h-[70px]
+    rounded-2xl
+    bg-white
+    flex
+    items-center
+    justify-center
+    overflow-hidden
+    flex-shrink-0
+    shadow-sm
+  "
+>
             <img
               src={logo.src}
               alt="Aritech Logo"
               className="
-                w-10
-                h-10
+                w-[72px]
+                h-[72px]
                 object-contain
               "
             />
@@ -241,12 +274,12 @@ async function fetchCourseCategories() {
           {/* TEXT */}
 
           <div className="leading-none">
-            <p className="text-white font-black text-[15px] tracking-tight">
+            <p className="text-white font-semibold text-[20px] leading-none">
               ARITECH
             </p>
 
             <p
-              className="text-[10px] mt-1 font-medium"
+              className="text-[12px] mt-1 font-medium tracking-wide"
               style={{
                 color: 'rgba(255,255,255,0.68)',
               }}
@@ -863,37 +896,60 @@ async function fetchCourseCategories() {
 
       {/* ANNOUNCEMENT */}
 
-      {isHomePage && (
-        <div
-          className="
-            h-10
-            flex
-            items-center
-            justify-center
-            px-4
-            text-sm
-            font-medium
-            tracking-tight
-          "
-          style={{
-            background: '#31446b',
-            color: 'rgba(255,255,255,0.92)',
-          }}
-        >
-          <div
-            className="
-              whitespace-nowrap
-              overflow-hidden
-              text-ellipsis
-            "
-          >
-            Admissions Open for 2026 Batch —{' '}
-            <span className="text-white/75">
-              Book your free demo session today
-            </span>
-          </div>
-        </div>
-      )}
+     {isHomePage &&
+  announcement?.title &&
+  announcement?.message && (
+  <div
+    className="
+      h-10
+      overflow-hidden
+      flex
+      items-center
+    "
+    style={{
+      background: '#31446b',
+      color: 'rgba(255,255,255,0.92)',
+    }}
+  >
+
+    <div
+  className="
+    flex-shrink-0
+    px-4
+    h-full
+    flex
+    items-center
+    font-semibold
+    text-xs
+    uppercase
+  "
+  style={{
+    background: '#24385d'
+  }}
+>
+  📢 Announcement
+</div>
+    <div
+  className="
+    flex-1
+    overflow-hidden
+  "
+>
+  <div className="announcement-track">
+    {[1, 2, 3, 4].map((item) => (
+      <span
+        key={item}
+        className="mx-12 text-sm font-medium"
+      >
+        {announcement.title}
+        {' — '}
+        {announcement.message}
+      </span>
+    ))}
+  </div>
+</div>
+  </div>
+)}
     </header>
   )
 }

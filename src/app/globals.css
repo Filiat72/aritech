@@ -169,3 +169,25 @@
 .animate-fade {
   animation: fade 0.35s ease;
 }
+
+@keyframes announcementScroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+.announcement-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  min-width: max-content;
+
+  animation:
+    announcementScroll
+    18s
+    linear
+    infinite;
+}
