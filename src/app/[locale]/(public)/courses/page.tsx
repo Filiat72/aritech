@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 
 import {
   ArrowRight,
@@ -41,6 +42,8 @@ import {
 export default function CoursesPage() {
   const [courses, setCourses] = useState([])
 const locale = useLocale()
+
+const searchParams = useSearchParams()
   const [selectedCategory, setSelectedCategory] =
     useState('All')
 
@@ -74,6 +77,29 @@ const locale = useLocale()
     fetchCourses()
 
   }, [])
+
+useEffect(() => {
+  const categorySlug =
+    searchParams.get('category')
+
+  if (!categorySlug || courses.length === 0)
+    return
+
+  const matchedCourse = courses.find(
+    (course: any) =>
+      course.categoryRef?.slug ===
+      categorySlug
+  ) as any
+
+  const matchedCategory =
+    matchedCourse?.categoryRef?.name
+
+  if (matchedCategory) {
+    setSelectedCategory(
+      matchedCategory
+    )
+  }
+}, [searchParams, courses])
 
   /* ====================================================
       FILTER LOGIC

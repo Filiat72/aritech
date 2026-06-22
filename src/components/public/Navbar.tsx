@@ -29,7 +29,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [coursesOpen, setCoursesOpen] = useState(false)
-
+const [mobileCoursesOpen, setMobileCoursesOpen] =
+  useState(false)
 const [courseCategories, setCourseCategories] = useState<any[]>([])
   const [languageOpen, setLanguageOpen] =
   useState(false)
@@ -630,28 +631,62 @@ async function fetchCourseCategories() {
         </button>
       </div>
 
+<div
+  className={`
+    fixed
+    inset-0
+    bg-black/40
+    z-30
+    transition-opacity
+    duration-300
+    ${
+      mobileOpen
+        ? 'opacity-100'
+        : 'opacity-0 pointer-events-none'
+    }
+  `}
+  onClick={() => {
+    setMobileOpen(false)
+    setMobileCoursesOpen(false)
+  }}
+/>
+
       {/* MOBILE MENU */}
 
-      {mobileOpen && (
+      
         <div
-          className="
-            lg:hidden
-            px-4
-            py-4
-            space-y-1
-          "
-          style={{
-            background:
-              '#4063a2',
-          }}
-        >
+  className={`
+    lg:hidden
+    fixed
+    top-[70px]
+    left-0
+    h-[calc(100vh-70px)]
+    w-[90vw]
+    max-w-[380px]
+    overflow-y-auto
+    bg-[#4063a2]
+    z-40
+
+    transform
+    transition-transform
+    duration-300
+    ease-in-out
+
+    ${
+      mobileOpen
+        ? 'translate-x-0'
+        : '-translate-x-full'
+    }
+  `}
+>
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              onClick={() =>
-                setMobileOpen(false)
-              }
+             onClick={() => {
+  setMobileOpen(false)
+  setMobileCoursesOpen(false)
+}}
               className="
                 block
                 px-4
@@ -679,10 +714,75 @@ async function fetchCourseCategories() {
           ))}
 
          
+{/* MOBILE COURSES */}
+
+<div className="px-4 pt-2 pb-0">
+
+  <button
+    onClick={() =>
+      setMobileCoursesOpen(
+        !mobileCoursesOpen
+      )
+    }
+    className="
+      w-full
+      flex
+      items-center
+      justify-between
+      px-4
+      py-3
+      rounded-lg
+      text-white
+      hover:bg-white/5
+    "
+  >
+    <span className="font-medium">
+  Courses
+</span>
+
+    <ChevronDown
+      className={`w-4 h-4 transition-transform duration-300 ${
+        mobileCoursesOpen
+          ? 'rotate-180'
+          : ''
+      }`}
+    />
+  </button>
+
+  {mobileCoursesOpen && (
+  <div className="mt-1 ml-3 space-y-1">
+
+      {courseCategories.map(
+        (category) => (
+          <Link
+            key={category.id}
+            href={`/courses?category=${category.slug}`}
+            onClick={() => {
+              setMobileOpen(false)
+              setMobileCoursesOpen(false)
+            }}
+            className="
+              block
+              px-4
+              py-2
+              rounded-lg
+              text-sm
+              text-white/80
+              hover:bg-white/5
+            "
+          >
+            {category.name}
+          </Link>
+        )
+      )}
+
+    </div>
+  )}
+</div>
+
 
           {/* MOBILE LANGUAGE */}
-
-<div className="px-4 py-3">
+<div className="px-4 pt-2 pb-3">
   <div
     className="
       text-xs
@@ -759,7 +859,7 @@ async function fetchCourseCategories() {
             {t('demo')}
           </Link>
         </div>
-      )}
+      
 
       {/* ANNOUNCEMENT */}
 
