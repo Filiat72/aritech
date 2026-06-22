@@ -53,6 +53,12 @@ export default function EditCoursePage() {
 const [categories, setCategories] =
   useState<any[]>([])
 
+const [newCategoryName, setNewCategoryName] =
+  useState('')
+
+const [showCategoryManager, setShowCategoryManager] =
+  useState(false)
+
   const [isFeatured, setIsFeatured] =
     useState(false)
 
@@ -156,6 +162,89 @@ async function fetchCategories() {
     console.error(error)
   }
 }
+
+async function handleCreateCategory() {
+  if (!newCategoryName.trim()) {
+    toast.error('Enter category name')
+    return
+  }
+
+
+  try {
+    const res = await fetch(
+      '/api/course-categories',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: newCategoryName,
+        }),
+      }
+    )
+
+    const data = await res.json()
+
+    if (!res.ok) {
+      throw new Error(data.error)
+    }
+
+toast.success('Category created')
+
+setCategoryId(data.id)
+
+setNewCategoryName('')
+
+await fetchCategories()
+  } catch (error: any) {
+    toast.error(error.message)
+  }
+}
+
+async function handleDeleteCategory(
+  id: string
+) {
+  const confirmed = window.confirm(
+    'Delete this category?'
+  )
+
+  if (!confirmed) {
+    return
+  }
+
+  try {
+    const res = await fetch(
+      `/api/course-categories/${id}`,
+      {
+        method: 'DELETE',
+      }
+    )
+
+    const data = await res.json()
+
+    if (!res.ok) {
+      throw new Error(
+        data.error ||
+          'Failed to delete category'
+      )
+    }
+
+    toast.success(
+      'Category deleted'
+    )
+
+    if (categoryId === id) {
+      setCategoryId('')
+    }
+
+    await fetchCategories()
+  } catch (error: any) {
+    toast.error(error.message)
+  }
+}
+
+
   async function fetchCourse() {
     try {
       const res = await fetch(
@@ -783,40 +872,76 @@ async function fetchCategories() {
 
             {/* CATEGORY */}
 
-            <div className="space-y-2">
-              <Label>
-                Category
-              </Label>
+    
+           
+           <div className="space-y-2">
 
-              <select
-  value={categoryId}
-  onChange={e =>
-    setCategoryId(e.target.value)
-  }
-  className="
-    w-full
-    rounded-md
-    border
-    p-3
-    text-sm
-    outline-none
-    bg-white
-  "
->
-  <option value="">
-    Select Category
-  </option>
+  <Label>Category</Label>
 
-  {categories.map(category => (
-    <option
-      key={category.id}
-      value={category.id}
+  <select
+    value={categoryId}
+    onChange={e =>
+      setCategoryId(e.target.value)
+    }
+    className="
+      w-full
+      rounded-md
+      border
+      p-3
+      text-sm
+      bg-white
+    "
+  >
+
+    <option value="">
+  Select Category
+</option>
+    {categories.map(category => (
+      <option
+        key={category.id}
+        value={category.id}
+      >
+        {category.name}
+      </option>
+    ))}
+  </select>
+{!categoryId && (
+  <p className="text-xs text-amber-600">
+    Category not assigned
+  </p>
+)}
+  <div className="flex gap-2">
+
+    <Input
+      value={newCategoryName}
+      onChange={e =>
+        setNewCategoryName(
+          e.target.value
+        )
+      }
+      placeholder="Create new category"
+    />
+
+    <Button
+      type="button"
+      onClick={handleCreateCategory}
     >
-      {category.name}
-    </option>
-  ))}
-</select>
-            </div>
+      Add
+    </Button>
+<Button
+  type="button"
+  variant="outline"
+  onClick={() =>
+    setShowCategoryManager(true)
+  }
+>
+  Manage Categories
+</Button>
+  </div>
+
+
+
+</div>
 
            
 
@@ -882,6 +1007,106 @@ async function fetchCategories() {
             </div>
           </form>
         </CardContent>
+
+        {showCategoryManager && (
+  <div
+    className="
+      fixed
+      inset-0
+      bg-black/50
+      flex
+      items-center
+      justify-center
+      z-50
+    "
+  >
+    <div
+      className="
+        bg-white
+        rounded-2xl
+        p-5
+        w-full
+        max-w-md
+        max-h-[70vh]
+        overflow-y-auto
+        shadow-xl
+      "
+    >
+      <div className="flex items-center justify-between mb-4">
+
+        <div>
+          <h2 className="text-lg font-semibold">
+            Manage Categories
+          </h2>
+
+          <p className="text-sm text-gray-500">
+            {categories.length} Categories
+          </p>
+        </div>
+
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() =>
+            setShowCategoryManager(false)
+          }
+        >
+          Close
+        </Button>
+
+      </div>
+
+      <div className="space-y-3">
+
+        {categories.map(category => (
+          <div
+            key={category.id}
+            className="
+              flex
+              items-center
+              justify-between
+              rounded-lg
+              border
+              px-4
+              py-3
+            "
+          >
+            <div>
+              <p className="font-medium">
+                {category.name}
+              </p>
+
+              <p className="text-xs text-gray-500">
+                {category.courses?.length || 0} course
+                {(category.courses?.length || 0) !== 1
+                  ? 's'
+                  : ''}
+              </p>
+            </div>
+
+            {(category.courses?.length || 0) === 0 ? (
+              <Button
+                type="button"
+                variant="destructive"
+                size="sm"
+                onClick={() =>
+                  handleDeleteCategory(category.id)
+                }
+              >
+                Delete
+              </Button>
+            ) : (
+              <span className="text-xs text-gray-400">
+                In Use
+              </span>
+            )}
+          </div>
+        ))}
+
+      </div>
+    </div>
+  </div>
+)}
       </Card>
     </div>
   )
