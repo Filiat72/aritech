@@ -28,13 +28,18 @@ import logo from '@/assets/logo.jpg'
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [coursesOpen, setCoursesOpen] = useState(false)
+
+const [courseCategories, setCourseCategories] = useState<any[]>([])
   const [languageOpen, setLanguageOpen] =
   useState(false)
 const languageRef =
   useRef<HTMLDivElement>(null)
+  const coursesRef =
+  useRef<HTMLDivElement>(null)
   const pathname = usePathname()
   const router = useRouter()
-
+console.log(courseCategories)
   const languages = [
   {
     code: 'en',
@@ -89,19 +94,28 @@ const currentLocale =
   }, [])
 
  
-  useEffect(() => {
+useEffect(() => {
   function handleClickOutside(
-    event: MouseEvent
+  event: MouseEvent
+) {
+  if (
+    languageRef.current &&
+    !languageRef.current.contains(
+      event.target as Node
+    )
   ) {
-    if (
-      languageRef.current &&
-      !languageRef.current.contains(
-        event.target as Node
-      )
-    ) {
-      setLanguageOpen(false)
-    }
+    setLanguageOpen(false)
   }
+
+  if (
+    coursesRef.current &&
+    !coursesRef.current.contains(
+      event.target as Node
+    )
+  ) {
+    setCoursesOpen(false)
+  }
+}
 
   document.addEventListener(
     'mousedown',
@@ -116,6 +130,24 @@ const currentLocale =
   }
 }, [])
 
+useEffect(() => {
+  fetchCourseCategories()
+}, [])
+
+async function fetchCourseCategories() {
+  try {
+   const res = await fetch(
+  '/api/course-categories?withCoursesOnly=true'
+)
+
+    const data = await res.json()
+
+    setCourseCategories(data || [])
+  } catch (error) {
+    console.error(error)
+  }
+}
+
   // NAV LINKS
   const navLinks = [
     {
@@ -128,10 +160,10 @@ const currentLocale =
       label: t('about'),
     },
 
-    {
-      href: '/courses',
-      label: t('courses'),
-    },
+    // {
+    //   href: '/courses',
+    //   label: t('courses'),
+    // },
 
     {
       href: '/faculty',
@@ -228,34 +260,191 @@ const currentLocale =
         <nav className="hidden lg:flex items-center gap-1">
 
           {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="
-                px-3
-                py-1.5
-                rounded-lg
-                text-[14px]
-                font-medium
-                transition-all
-                duration-300
-                hover:bg-white/5
-              "
-              style={{
-                color:
-                  pathname === link.href
-                    ? '#ffffff'
-                    : 'rgba(255,255,255,0.74)',
+  <Link
+    key={link.href}
+    href={link.href}
+    className="
+      px-3
+      py-1.5
+      rounded-lg
+      text-[14px]
+      font-medium
+      transition-all
+      duration-300
+      hover:bg-white/5
+    "
+    style={{
+      color:
+        pathname === link.href
+          ? '#ffffff'
+          : 'rgba(255,255,255,0.74)',
 
-                background:
-                  pathname === link.href
-                    ? 'rgba(255,255,255,0.05)'
-                    : 'transparent',
-              }}
-            >
-              {link.label}
-            </Link>
-          ))}
+      background:
+        pathname === link.href
+          ? 'rgba(255,255,255,0.05)'
+          : 'transparent',
+    }}
+  >
+    {link.label}
+  </Link>
+))}
+
+{/* COURSES DROPDOWN */}
+
+<div
+  ref={coursesRef}
+  className="relative"
+  onMouseEnter={() =>
+    setCoursesOpen(true)
+  }
+>
+  <button
+    
+    className="
+      flex
+      items-center
+      gap-1
+      px-3
+      py-1.5
+      rounded-lg
+      text-[14px]
+      font-medium
+      hover:bg-white/5
+    "
+    style={{
+      color:
+        'rgba(255,255,255,0.74)',
+    }}
+  >
+    Courses
+
+    <ChevronDown
+  className={`w-4 h-4 transition-transform duration-200 ${
+    coursesOpen
+      ? 'rotate-180'
+      : 'rotate-0'
+  }`}
+/>
+  </button>
+
+  <div
+  onMouseLeave={() =>
+    setCoursesOpen(false)
+  }
+  className={`
+    absolute
+    top-full
+    right-0
+    mt-2
+    w-[320px]
+    bg-white
+    rounded-xl
+    shadow-[0_20px_60px_rgba(0,0,0,0.15)]
+    p-3
+    z-50
+    max-h-[500px]
+    overflow-y-auto
+
+    transition-all
+    duration-300
+    ease-out
+
+    ${
+      coursesOpen
+        ? `
+          opacity-100
+          translate-y-0
+          scale-100
+          visible
+        `
+        : `
+          opacity-0
+          -translate-y-2
+          scale-95
+          invisible
+          pointer-events-none
+        `
+    }
+  `}
+>
+      {courseCategories.map(
+        (category) => (
+          <div
+  key={category.id}
+  className="
+    relative
+    p-4
+    rounded-xl
+    border
+    border-slate-100
+    hover:border-blue-100
+    hover:bg-slate-50
+    transition-all
+    duration-200
+  "
+>
+          <div
+                  className="
+                    absolute
+                    left-0
+                    top-6
+                    w-[4px]
+                    h-12
+                    rounded-r-full
+                  "
+                  style={{
+                    background: '#4063a2',
+                  }}
+                />
+           <Link
+  href={`/courses?category=${category.slug}`}
+  onClick={() =>
+    setCoursesOpen(false)
+  }
+  className="
+    block
+    font-semibold
+    text-slate-900
+    text-[15px]
+  "
+>
+  {category.name}
+</Link>
+
+{/* <p className="text-xs text-slate-500 mt-1 mb-3">
+  {category.courses?.length || 0} Programs
+</p> */}
+
+            {category.courses?.map(
+              (course: any) => (
+              <Link
+  key={course.id}
+  href={`/courses/${course.slug}`}
+  onClick={() =>
+    setCoursesOpen(false)
+  }
+                  className="
+  block
+  py-2
+  px-3
+  rounded-lg
+  text-sm
+  text-slate-600
+  hover:bg-blue-50
+  hover:text-blue-600
+  transition-all
+"
+                >
+                  {course.title}
+                </Link>
+              )
+            )}
+          </div>
+        )
+      )}
+    </div>
+  
+</div>
 
          
 
@@ -298,7 +487,13 @@ const currentLocale =
       }
     </span>
 
-    <ChevronDown className="w-4 h-4" />
+       <ChevronDown
+  className={`w-4 h-4 transition-transform duration-200 ${
+    languageOpen
+      ? 'rotate-180'
+      : 'rotate-0'
+  }`}
+/>
   </button>
 
   {languageOpen && (

@@ -83,22 +83,22 @@ const locale = useLocale()
   selectedCategory === 'All'
     ? courses
     : courses.filter(
-        (course: any) =>
-          course.category
-            ?.trim()
-            .toLowerCase() ===
-          selectedCategory
-            .trim()
-            .toLowerCase()
-      )
-      const categories = [
+  (course: any) =>
+    course.categoryRef?.name
+      ?.trim()
+      .toLowerCase() ===
+    selectedCategory
+      .trim()
+      .toLowerCase()
+)
+   const categories = [
   'All',
 
   ...new Set(
     courses
       .map(
         (course: any) =>
-          course.category
+          course.categoryRef?.name
       )
       .filter(Boolean)
   ),
@@ -569,7 +569,7 @@ const locale = useLocale()
                 'blur(10px)',
             }}
           >
-            {course.category}
+            {course.categoryRef?.name}
           </div>
         </div>
 

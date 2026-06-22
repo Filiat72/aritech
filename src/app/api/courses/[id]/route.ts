@@ -20,7 +20,7 @@ export async function PUT(
       title,
       shortDescription,
       description,
-      category,
+      categoryId,
       thumbnail,
       isFeatured,
       isActive,
@@ -47,7 +47,7 @@ export async function PUT(
     const updateData: any = {
       title,
 
-      category,
+      categoryId,
 
       thumbnail:
         thumbnail?.trim() || null,
@@ -146,6 +146,7 @@ export async function GET(
         where: { id },
 
         include: {
+          categoryRef: true,
           boards: true,
 
           courseInfo: {

@@ -25,15 +25,17 @@ export async function GET(req: Request) {
           createdAt: 'desc',
         },
 
-        include: {
-          boards: true,
+       include: {
+  categoryRef: true,
 
-          modes: {
-            include: {
-              packages: true,
-            },
-          },
-        },
+  boards: true,
+
+  modes: {
+    include: {
+      packages: true,
+    },
+  },
+},
       })
 
     return NextResponse.json(courses)
@@ -54,19 +56,20 @@ export async function GET(req: Request) {
 ====================================================== */
 
 export async function POST(req: Request) {
+    console.log("POST CATEGORY HIT");
   try {
     const body = await req.json()
 
     const {
-      title,
-      shortDescription,
-      description,
-      category,
-      thumbnail,
-      isFeatured,
-      isActive,
-      courseInfo = [],
-    } = body
+  title,
+  shortDescription,
+  description,
+  categoryId,
+  thumbnail,
+  isFeatured,
+  isActive,
+  courseInfo = [],
+} = body
 
     /* ======================================================
        VALIDATION
@@ -74,12 +77,12 @@ export async function POST(req: Request) {
 
     if (
       !title ||
-      !category
+      !categoryId
     ) {
       return NextResponse.json(
         {
           error:
-            'Title, category are required',
+            'Title and category are required',
         },
         {
           status: 400,
@@ -123,39 +126,41 @@ export async function POST(req: Request) {
       : []
 
     const course = await prisma.course.create({
-      data: {
-        title,
+  data: {
+    title,
 
-        slug,
+    slug,
 
-        shortDescription:
-          shortDescription || '',
+    shortDescription:
+      shortDescription || '',
 
-        description:
-          description || '',
+    description:
+      description || '',
 
-        category,
+    categoryId,
 
-        thumbnail:
-          thumbnail?.trim() || null,
+    category: '',
 
-        isFeatured:
-          isFeatured ?? false,
+    thumbnail:
+      thumbnail?.trim() || null,
 
-        isActive:
-          isActive ?? true,
+    isFeatured:
+      isFeatured ?? false,
 
-        courseInfo: {
-          create: courseInfoItems.map(
-            (item: any, index: number) => ({
-              label: item.label,
-              value: item.value,
-              sortOrder: index,
-            })
-          ),
-        },
-      },
-    })
+    isActive:
+      isActive ?? true,
+
+    courseInfo: {
+      create: courseInfoItems.map(
+        (item: any, index: number) => ({
+          label: item.label,
+          value: item.value,
+          sortOrder: index,
+        })
+      ),
+    },
+  },
+})
 
     return NextResponse.json(course)
   } catch (error) {

@@ -33,6 +33,11 @@ type Course = {
 
   category: string
 
+  categoryRef?: {
+    id: string
+    name: string
+  } | null
+
   thumbnail?: string | null
 
   isFeatured: boolean
@@ -41,16 +46,13 @@ type Course = {
 
   boards: {
     id: string
-
     board: string
   }[]
 
   modes: {
     id: string
-
     packages: {
       id: string
-
       monthlyPrice: number
     }[]
   }[]
@@ -359,10 +361,8 @@ export default function CoursesPage() {
                     {/* CATEGORY */}
 
                     <TableCell>
-                      {
-                        course.category
-                      }
-                    </TableCell>
+  {course.categoryRef?.name || '—'}
+</TableCell>
 
                     {/* BOARDS */}
 

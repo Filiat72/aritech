@@ -47,8 +47,11 @@ export default function EditCoursePage() {
 
   const [title, setTitle] = useState('')
 
-  const [category, setCategory] =
-    useState('school')
+  const [categoryId, setCategoryId] =
+  useState('')
+
+const [categories, setCategories] =
+  useState<any[]>([])
 
   const [isFeatured, setIsFeatured] =
     useState(false)
@@ -140,7 +143,19 @@ export default function EditCoursePage() {
   /* ======================================================
       FETCH COURSE
   ====================================================== */
+async function fetchCategories() {
+  try {
+    const res = await fetch(
+      '/api/course-categories'
+    )
 
+    const data = await res.json()
+
+    setCategories(data || [])
+  } catch (error) {
+    console.error(error)
+  }
+}
   async function fetchCourse() {
     try {
       const res = await fetch(
@@ -158,9 +173,9 @@ export default function EditCoursePage() {
 
       setTitle(data.title || '')
 
-      setCategory(
-        data.category || 'school'
-      )
+      setCategoryId(
+  data.categoryId || ''
+)
 
       setThumbnail(
         data.thumbnail || ''
@@ -196,15 +211,16 @@ export default function EditCoursePage() {
     }
   }
 
-  useEffect(() => {
-    if (
-      typeof courseId === 'string' &&
-      courseId.trim() &&
-      courseId !== 'undefined'
-    ) {
-      fetchCourse()
-    }
-  }, [courseId])
+ useEffect(() => {
+  if (
+    typeof courseId === 'string' &&
+    courseId.trim() &&
+    courseId !== 'undefined'
+  ) {
+    fetchCategories()
+    fetchCourse()
+  }
+}, [courseId])
 
   /* ======================================================
       SLUG PREVIEW
@@ -490,14 +506,14 @@ export default function EditCoursePage() {
               'application/json',
           },
 
-          body: JSON.stringify({
-            title,
-            category,
-            thumbnail,
-            isFeatured,
-            isActive,
-            courseInfo,
-          }),
+         body: JSON.stringify({
+  title,
+  categoryId,
+  thumbnail,
+  isFeatured,
+  isActive,
+  courseInfo,
+}),
         }
       )
 
@@ -773,90 +789,33 @@ export default function EditCoursePage() {
               </Label>
 
               <select
-                value={category}
-                onChange={e =>
-                  setCategory(
-                    e.target.value
-                  )
-                }
-                className="
-                  w-full
-                  rounded-md
-                  border
-                  p-3
-                  text-sm
-                  outline-none
-                  bg-white
-                "
-              >
-                <option value="School">
-                  School & College
-                </option>
+  value={categoryId}
+  onChange={e =>
+    setCategoryId(e.target.value)
+  }
+  className="
+    w-full
+    rounded-md
+    border
+    p-3
+    text-sm
+    outline-none
+    bg-white
+  "
+>
+  <option value="">
+    Select Category
+  </option>
 
-                <option value="Competitive">
-                  Competitive Exams
-                </option>
-
-                <option value="Job">
-                  Career & Job Skills
-                </option>
-
-                <option value="Distance">
-                  Distance Education
-                </option>
-
-                <option value="Retake">
-                  Retake Coaching
-                </option>
-
-                <option value="NEET">
-                  NEET Coaching
-                </option>
-
-                <option value="JEE">
-                  JEE Coaching
-                </option>
-
-                <option value="English">
-                  Spoken English
-                </option>
-
-                <option value="Hindi">
-                  Spoken Hindi
-                </option>
-
-                <option value="Vedic-Maths">
-                  Vedic Maths
-                </option>
-
-                <option value="Phonics">
-                  Phonics Program
-                </option>
-
-                <option value="Leadership">
-                  Leadership Training
-                </option>
-
-                <option value="MIS">
-                  MIS Training
-                </option>
-
-                <option value="Typewriting">
-                  Typewriting Training
-                </option>
-
-                <option value="Medical-Coding">
-                  Medical Coding Job Training
-                </option>
-
-                <option value="Software">
-                  Software Training
-                </option>
-
-                <option value="Hardware">
-                  Hardware Training
-                </option>
-              </select>
+  {categories.map(category => (
+    <option
+      key={category.id}
+      value={category.id}
+    >
+      {category.name}
+    </option>
+  ))}
+</select>
             </div>
 
            
