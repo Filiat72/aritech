@@ -2,6 +2,7 @@
 import { prisma } from '@/lib/prisma'
 
 import HeroSection from '@/components/public/home/HeroSection'
+import DemoPopup from '@/components/DemoPopup'
 import TestimonialSection from '@/components/public/home/TestimonialSection'
 import LearningPathSection from '@/components/public/home/LearningPathSection'
 import WhyChooseUsSection from '@/components/public/home/WhyChooseUsSection'
@@ -66,6 +67,10 @@ export default async function HomePage() {
         background: '#eff6ff',
       }}
     >
+
+
+      <DemoPopup />
+
 
       {/* HERO */}
       <HeroSection />
