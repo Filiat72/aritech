@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import { getLocale } from 'next-intl/server'
-import SeatAlertPopup from '@/components/SeatAlertPopup'
+
 import CoursePricingSection from '@/components/public/courses/CoursePricingSection'
 
 import {
@@ -87,7 +87,7 @@ const locale = await getLocale()
         pt-16
       "
     >
-      <SeatAlertPopup />
+      
 
       {/* =======================================================
           HERO

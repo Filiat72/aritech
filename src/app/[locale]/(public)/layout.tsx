@@ -1,6 +1,6 @@
 import Navbar from '@/components/public/Navbar'
 import Footer from '@/components/public/Footer'
-import FeedbackPopup from '@/components/FeedbackPopup'
+
 
 export default function PublicLayout({
   children,
@@ -14,7 +14,7 @@ export default function PublicLayout({
         {children}
       </main>
       <Footer />
-      <FeedbackPopup />
+      
     </div>
   )
 }
