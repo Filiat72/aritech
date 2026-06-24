@@ -19,6 +19,8 @@ import {
   ChevronDown,
 } from 'lucide-react'
 
+import { useLocale } from 'next-intl'
+
 import {
   useTranslations,
 } from 'next-intl'
@@ -68,12 +70,7 @@ const languageRef =
 ]
 
   // CURRENT LOCALE
-  const localeMatch = pathname.match(
-  /^\/(en|ta|hi|ml|kn)/
-)
-
-const currentLocale =
-  localeMatch?.[1] || 'en'
+ const currentLocale = useLocale()
 
   const t = useTranslations('navbar')
 
@@ -220,7 +217,15 @@ async function fetchAnnouncement() {
   
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      className="
+  fixed
+  top-0
+  left-0
+  right-0
+  z-50
+  border-b
+  border-white/10
+"
       style={{
         
         background: scrolled
@@ -248,8 +253,8 @@ async function fetchAnnouncement() {
         >
        <div
   className="
-    w-[70px]
-    h-[70px]
+    w-[55px]
+    h-[55px]
     rounded-2xl
     bg-white
     flex
@@ -258,14 +263,16 @@ async function fetchAnnouncement() {
     overflow-hidden
     flex-shrink-0
     shadow-sm
+    border
+border-[#E5E7EB]
   "
 >
             <img
               src={logo.src}
               alt="Aritech Logo"
               className="
-                w-[72px]
-                h-[72px]
+                w-[45px]
+                h-[45px]
                 object-contain
               "
             />
@@ -274,7 +281,7 @@ async function fetchAnnouncement() {
           {/* TEXT */}
 
           <div className="leading-none">
-            <p className="text-white font-semibold text-[20px] leading-none">
+            <p className="text-white font-bold text-[18px] leading-none tracking-tight">
               ARITECH
             </p>
 
@@ -311,7 +318,7 @@ async function fetchAnnouncement() {
       color:
         pathname === link.href
           ? '#ffffff'
-          : 'rgba(255,255,255,0.74)',
+          : 'rgba(255,255,255,0.82)',
 
       background:
         pathname === link.href
@@ -491,21 +498,24 @@ async function fetchAnnouncement() {
 
 
   <button
-    onClick={() =>
-      setLanguageOpen(!languageOpen)
-    }
+     onClick={() =>
+    setLanguageOpen(!languageOpen)
+  }
     className="
-      flex
-      items-center
-      gap-2
-      px-3
-      py-1.5
-      rounded-lg
-      text-[14px]
-      hover:bg-white/5
-      transition-all
-      duration-300
-    "
+  flex
+  items-center
+  gap-2
+  px-4
+  h-10
+  rounded-full
+  bg-white/5
+  border
+  border-white/10
+  text-[14px]
+  hover:bg-white/10
+  transition-all
+  duration-300
+"
     style={{
       color: 'rgba(255,255,255,0.74)',
     }}
@@ -592,20 +602,27 @@ async function fetchAnnouncement() {
           {/* PHONE */}
 
           <a
-            href="tel:+919566656633"
-            className="
-              flex
-              items-center
-              gap-2
-              text-[14px]
-              transition-all
-              duration-300
-              hover:text-white
-            "
-            style={{
-              color: 'rgba(255,255,255,0.74)',
-            }}
-          >
+  href="tel:+919500020181"
+ className="
+  flex
+  items-center
+  gap-2
+  px-4
+  h-10
+  rounded-full
+  bg-white/8
+  border
+  border-white/10
+  text-[14px]
+  transition-all
+  duration-300
+  hover:bg-white/15
+  hover:text-white
+"
+  style={{
+    color: 'rgba(255,255,255,0.74)',
+  }}
+>
             <Phone className="w-4 h-4" />
 
             <span>
@@ -915,7 +932,8 @@ async function fetchAnnouncement() {
     <div
   className="
     flex-shrink-0
-    px-4
+    px-2
+    md:px-4
     h-full
     flex
     items-center
@@ -927,7 +945,11 @@ async function fetchAnnouncement() {
     background: '#24385d'
   }}
 >
-  📢 Announcement
+   <span className="md:hidden">📢</span>
+
+   <span className="hidden md:inline">
+      Announcement
+   </span>
 </div>
     <div
   className="
@@ -942,7 +964,7 @@ async function fetchAnnouncement() {
         className="mx-12 text-sm font-medium"
       >
         {announcement.title}
-        {' — '}
+        {' - '}
         {announcement.message}
       </span>
     ))}
